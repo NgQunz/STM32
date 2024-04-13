@@ -16,14 +16,14 @@ void led_Blink(void){
 //	GPIO_ResetBits(GPIOA,	GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_0);
 //	GPIO_WriteBit(GPIOA,	GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_0, Bit_RESET);
 //	GPIOC->ODR= 0x00;
-	GPIO_ResetBits(GPIOA, GPIO_Pin_0);
+	GPIO_ResetBits(GPIOC, GPIO_Pin_13);
 //	GPIO_Write (GPIOA,0xFFFF);
 //	GPIO_WriteBit (GPIOA, GPIO_Pin_0, Bit_SET);
 	Delay_ms(500);
 //	GPIO_SetBits(GPIOA,	GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_0);
 //	GPIO_WriteBit(GPIOA,	GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_0, Bit_SET);
 //	GPIOC->ODR= 0xFF;
-	GPIO_SetBits(GPIOA, GPIO_Pin_0);
+	GPIO_SetBits(GPIOC, GPIO_Pin_13);
 //	GPIO_Write (GPIOA,0x0000);
 //	GPIO_WriteBit (GPIOA, GPIO_Pin_0, Bit_RESET);
 	Delay_ms(500);

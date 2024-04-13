@@ -400,14 +400,14 @@
           <GroupName>Header</GroupName>
           <Files>
             <File>
-              <FileName>timer2-delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\USER\timer2-delay.h</FilePath>
-            </File>
-            <File>
               <FileName>uart.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\USER\uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>timer2_delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\timer2_delay.c</FilePath>
             </File>
           </Files>
         </Group>

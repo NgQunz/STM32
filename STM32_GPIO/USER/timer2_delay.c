@@ -32,11 +32,11 @@ void Delay_ms(unsigned int time){
 }
 void led_Init(void){
 	GPIO_InitTypeDef led_init;
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
 	led_init.GPIO_Mode = GPIO_Mode_Out_PP;
-	led_init.GPIO_Pin = GPIO_Pin_0;
+	led_init.GPIO_Pin = GPIO_Pin_13;
 	led_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOA,&led_init);
+	GPIO_Init(GPIOC,&led_init);
 }
 /********************************* END OF FILE ********************************/
 /******************************************************************************/

@@ -17,3 +17,8 @@
 .\objects\main.o: C:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc\stm32f10x_tim.h
 .\objects\main.o: C:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc\misc.h
 .\objects\main.o: src\delay.h
+.\objects\main.o: src\motor.h
+.\objects\main.o: src\pwm.h
+.\objects\main.o: src\button.h
+.\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\main.o: src\sensor.h

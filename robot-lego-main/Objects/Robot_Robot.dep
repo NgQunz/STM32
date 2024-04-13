@@ -1,5 +1,5 @@
 Dependencies for Project 'Robot', Target 'Robot': (DO NOT MODIFY !)
-F (.\src\main.c)(0x661830BC)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-ID:\STM32_PROJECT\robot-lego-main\RTE-ID:\STM32_PROJECT\robot-lego-main\RTE\Device\STM32F103C8-IC:\Users\nguye\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-IC:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc-D__UVISION_VERSION="521" -D_RTE_ -DSTM32F10X_MD-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\src\main.c)(0x661A6E47)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-ID:\STM32_PROJECT\robot-lego-main\RTE-ID:\STM32_PROJECT\robot-lego-main\RTE\Device\STM32F103C8-IC:\Users\nguye\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-IC:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc-D__UVISION_VERSION="521" -D_RTE_ -DSTM32F10X_MD-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (src\led.h)(0x66175351)
 I (C:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x61AD876E)
 I (C:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include\stm32f10x.h)(0x61AD876E)
@@ -16,6 +16,11 @@ I (C:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPer
 I (C:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc\stm32f10x_tim.h)(0x61AD876E)
 I (C:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc\misc.h)(0x61AD876E)
 I (src\delay.h)(0x6618241C)
+I (src\motor.h)(0x66175351)
+I (src\pwm.h)(0x66181DF3)
+I (src\button.h)(0x66175351)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x574E4C36)
+I (src\sensor.h)(0x66175351)
 F (.\src\led.c)(0x66182763)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections-ID:\STM32_PROJECT\robot-lego-main\RTE-ID:\STM32_PROJECT\robot-lego-main\RTE\Device\STM32F103C8-IC:\Users\nguye\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-IC:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc-D__UVISION_VERSION="521" -D_RTE_ -DSTM32F10X_MD-o .\objects\led.o --omf_browse .\objects\led.crf --depend .\objects\led.d)
 I (src\led.h)(0x66175351)
 I (C:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc\stm32f10x_gpio.h)(0x61AD876E)
