@@ -12,7 +12,7 @@ char arr[MAX];
 char received_data[MAX];
 int count=0,vtri_stt=0;
 char temp_char;
-void USART_config (void){
+void UART_Config (void){
 	USART_InitTypeDef uart;
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 	uart.USART_BaudRate = 9600;
@@ -38,23 +38,22 @@ void GPIO_Config_TX_RX(){
 	GPIO_Init(GPIOA, &gpio);
 }
 
-void uart_SendStr(char *str){
+void 	UART_Send_Str(char *str){
 	while(*str != NULL){
-		uart_SendChar(*str++);		
+		UART_Send_Char(*str++);		
 	}
 }
-void uart_SendChar(char _chr){
+void UART_Send_Char(char _chr){
 	USART_SendData(USART1,_chr);
 	while(USART_GetFlagStatus(USART1, USART_FLAG_TXE)==RESET);
 }
-void uart_Receive_data()
-{
+void UART_Receive_Data(){
 	char temp;
 	temp= USART_ReceiveData(USART1);
 	if (temp == 'B') GPIO_ResetBits(GPIOC, GPIO_Pin_13);
 	else if(temp== 'T') GPIO_SetBits(GPIOC, GPIO_Pin_13);
 }
-void UARTPrintf_Number(long number) {
+void UART_Printf_Number(long number) {
   char str[18];  // Luu so nguyen am
   int num_digits = 0,i,j;
   int is_negative = 0;
@@ -91,12 +90,12 @@ void UARTPrintf_Number(long number) {
 
   str[num_digits] = '\0';  // Ket thuc chuoi bang NULL
 
-	uart_SendStr(str);
-	uart_SendStr("\n");
+	UART_Send_Str(str);
+	UART_Send_Str("\n");
 }
 
 
-void UARTPrintf_Float(double number, int decimalPlaces) {
+void UART_Printf_Float(double number, int decimalPlaces) {
   char str[10],temp_char; 
   int num_digits = 0,is_negative = 0,int_part,digit,i=0,j=0;
 	int temp;
@@ -151,12 +150,11 @@ void UARTPrintf_Float(double number, int decimalPlaces) {
     str[0] = '-';
     num_digits++;
   }
-  uart_SendStr(str);
-	uart_SendStr("\n");
+  UART_Send_Str(str);
+	UART_Send_Str("\n");
 }
 
-void USART1_IRQHandler(void)
-{
+void UART_IRQHandler(void){
 	char received_char;
 	if ( USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
 	{
@@ -181,8 +179,48 @@ void USART1_IRQHandler(void)
 			count++;
 		}
 	}
-	uart_SendStr(received_data);
+	UART_Send_Str(received_data);
+	UART_Send_Str("\n");
 }
+void UARTPrintf_Int_Number(int number) {
+  char str[10];  
+  int num_digits = 0,i,j;
+  int is_negative = 0;
+	long temp = number;
+  if (number < 0) {
+    is_negative = 1;
+    number = -number; 
+  }
+  
+  while (temp > 0) {
+    str[num_digits] = '0' + (temp % 10);
+    temp = temp / 10;
+    num_digits++;
+  }
 
+  if (number == 0) {
+    str[num_digits++] = '0';
+  }
+	j = num_digits - 1;
+  for (i = 0; i < j; i++) {
+    char temp_char = str[i];
+    str[i] = str[j];
+    str[j] = temp_char;
+		j--;
+  }
+
+  if (is_negative) {
+    for (i = num_digits; i >= 0; i--) {
+      str[i + 1] = str[i];
+    }
+    str[0] = '-';
+    num_digits++;
+  }
+
+  str[num_digits] = '\0'; 
+
+	UART_Send_Str(str);
+	UART_Send_Str("\n");
+}
 /********************************* END OF FILE ********************************/
 /******************************************************************************/

@@ -20,6 +20,6 @@ typedef enum {
 }Sensor_Val;
 
 void Sensor_Init(void);
-uint8_t Sensor_Read(uint8_t pin);
+uint8_t Sensor_Read(uint16_t pin);
 
 #endif

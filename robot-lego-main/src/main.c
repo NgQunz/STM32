@@ -4,120 +4,72 @@
 #include "button.h"
 #include "sensor.h"
 
-#define ON 1
-#define OFF 0
-#define baseSpeed 60
-#define turnSpeed 20
+int speedMax = 80;
+int speed3 = 0.8 *speedMax;
+int speed2 = 0.4 *speedMax;
+int speed1 = 0.2 *speedMax;
 
-int count = 0;
-int buttonState = OFF;
-int lastButtonState = OFF;
+void RePhai(int motor1, int motor2){
+    Motor_SetForward(MOTOR_1, motor1);
+    Motor_SetForward(MOTOR_2, motor2);
+}
 
-void Sensor_Read_All();
-void Read_Button();
-void Turn_Left(int Speed_M_1, int Speed_M_2);
-void Turn_Right(int Speed_M_1, int Speed_M_2);
-void ForWard(int Speed);
-void BackWard(int Speed);
-void Run();
+void ReTrai(int motor1, int motor2){
+    Motor_SetForward(MOTOR_2, motor2);
+    Motor_SetForward(MOTOR_1, motor1);
+}
 
-int Status_Robot = 0;
-int S1, S2, S3, S4, S5;
+void diThang(int motor1, int motor2){
+    Motor_SetForward(MOTOR_1, motor1);
+    Motor_SetForward(MOTOR_2, motor2);
+}
 
-int main(void)
-{
-	Delay_Init();
-	Led_Init();
-	Motor_Init();
-	Button_Init();
-	Sensor_Init();
-	while (1)
-	{
-		Read_Button();
-		Sensor_Read_All();
-		Delay_ms(50);
-		if (Status_Robot == ON)
-		{
-			Run();
-		}
-	}
+uint16_t SensorRead(uint16_t pin){
+    if(GPIO_ReadInputDataBit(SENSOR_PORT, pin) == Bit_SET)
+        return SENSOR_ON;
+    else
+        return SENSOR_OFF;
 }
-void Run()
-{
-	int S = S1 * 10000 + S2 * 1000 + S3 * 100 + S4 * 10 + S5;
 
-	switch (S)
-	{
-	case 11011:
-		ForWard(baseSpeed + turnSpeed);
-		break;
-	case 01111:
-		Turn_Left(baseSpeed, baseSpeed + turnSpeed); // re bang cach quay nguoc banh trai to do 80
-		break;
-	case 11110:
-		Turn_Right(baseSpeed + turnSpeed, baseSpeed); // re bang cach quay nguoc banh phai to do 80
-		break;
-	case 10111:
-		Turn_Left(baseSpeed, baseSpeed - turnSpeed); // re bang cach quay nguoc banh trai to do 40
-		break;
-	case 11101:
-		Turn_Right(baseSpeed - turnSpeed, baseSpeed); // re bang cach quay nguoc banh phai to do 40
-		break;
-	case 00111:
-		Turn_Left(baseSpeed, baseSpeed); // re bang cach quay nguoc banh trai to do 60
-		break;
-	case 11100:
-		Turn_Right(baseSpeed, baseSpeed); // re bang cach quay nguoc banh phai to do 60
-		break;
-	default:
-		BackWard(baseSpeed);
-		break;
-	}
-}
-void Read_Button()
-{
-	int reading = Button_Read(BUTTON_ONOFF);
-	if (reading != lastButtonState)
-	{
-		Delay_ms(200);
-		if (reading != buttonState)
-		{
-			buttonState = reading;
-			if (buttonState == OFF)
-			{
-				count++;
-				count %= 2;
-				Status_Robot = count;
-			}
-		}
-	}
-	lastButtonState = reading;
-}
-void Sensor_Read_All()
-{
-	S1 = Sensor_Read(SENSOR_PIN1);
-	S2 = Sensor_Read(SENSOR_PIN2);
-	S3 = Sensor_Read(SENSOR_PIN3);
-	S4 = Sensor_Read(SENSOR_PIN4);
-	S5 = Sensor_Read(SENSOR_PIN5);
-}
-void ForWard(int Speed)
-{
-	Motor_SetForward(MOTOR_1, Speed);
-	Motor_SetForward(MOTOR_2, Speed);
-}
-void BackWard(int Speed)
-{
-	Motor_SetBackward(MOTOR_1, Speed);
-	Motor_SetBackward(MOTOR_2, Speed);
-}
-void Turn_Left(int Speed_M_1, int Speed_M_2)
-{
-	Motor_SetForward(MOTOR_1, Speed_M_1);
-	Motor_SetBackward(MOTOR_2, Speed_M_2);
-}
-void Turn_Right(int Speed_M_1, int Speed_M_2)
-{
-	Motor_SetBackward(MOTOR_1, Speed_M_1);
-	Motor_SetForward(MOTOR_2, Speed_M_2);
+int main(void){
+    Delay_Init();
+    Led_Init();
+    Motor_Init();
+    Button_Init();
+    Sensor_Init();
+
+    while(1){
+        uint8_t sensor1 = Sensor_Read(SENSOR_PIN1);
+        uint8_t sensor2 = Sensor_Read(SENSOR_PIN2);
+        uint8_t sensor3 = Sensor_Read(SENSOR_PIN3);
+        uint8_t sensor4 = Sensor_Read(SENSOR_PIN4);
+        uint16_t sensor5 = SensorRead(SENSOR_PIN5);
+        int line_state = (sensor1 << 4) | (sensor2 << 3) | (sensor3 << 2) | (sensor4 << 1) | sensor5;
+
+            switch(line_state) {
+                case 0b11011: 
+                    diThang(speedMax,speedMax);
+                    break;
+								case 0b11101:
+                    ReTrai(speed3,speedMax);
+                    break;
+								case 0b11110:
+									  ReTrai(speed2,speedMax);
+                    break;
+								case 0b11000:
+										RePhai(speedMax,speed1);
+										break;
+								case 0b10111:
+										RePhai(speedMax,speed3);
+                    break;
+								case 0b01111:
+										RePhai(speedMax,speed2);
+                    break;
+								case 0b00011:
+										ReTrai(speed1,speedMax);
+                    break;
+								default:
+										break;
+            }
+    }
 }

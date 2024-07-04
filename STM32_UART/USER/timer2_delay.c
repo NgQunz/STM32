@@ -12,7 +12,7 @@ void timer_Init(void){
 		TIM_TimeBaseInitTypeDef timer_init;
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
     timer_init.TIM_CounterMode = TIM_CounterMode_Up;
-    timer_init.TIM_Period = 35999; // co the de gia tri max 
+    timer_init.TIM_Period = 65535; // co the de gia tri max 
     timer_init.TIM_Prescaler = 2 - 1;
     timer_init.TIM_RepetitionCounter = 0;
     TIM_TimeBaseInit(TIM2,&timer_init);

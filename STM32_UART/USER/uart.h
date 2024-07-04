@@ -22,17 +22,17 @@
 #include "string.h"
 #include "stdio.h"
 	 
-#define MAX 100
-	 
+#define MAX 20
+
 void GPIO_Config_TX_RX();
 void USART_config(void);
-void uart_SendStr(char *str);
-void uart_SendChar(char _chr);
-void led_Init(void);
-void uart_Receive_data();
-void UARTPrintf_Number(long number);
+void UART_SendStr(char *str);
+void UART_SendChar(char _chr);
+void UART_Receive_data();
+void UART_Printf_Number(long number);
+void UARTPrintf_IntNumber(int number);
 void UARTPrintf_Str(char ch);
-
+	 
 #ifdef __cplusplus
 }
 #endif

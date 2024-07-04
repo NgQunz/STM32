@@ -10,6 +10,7 @@ int main(){
 	GPIO_Config_TX_RX();
 	while(1){
 		UARTPrintf_Number(x);
+		
 		Delay_ms(1000);
 	}
 }

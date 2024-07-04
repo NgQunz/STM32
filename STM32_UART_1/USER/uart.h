@@ -28,13 +28,13 @@ void GPIO_Config_TX_RX();
 void USART_config(void);
 void led_Init(void);
 	 
-void uart_SendStr(char *str);
-void uart_SendChar(char _chr);
-void uart_Receive_data();
-void UARTPrintf_Number(long number);
-void UARTPrintf_Str(char ch);
-void USART1_IRQHandler(void);
-void UARTPrintf_Float(double number, int decimalPlaces);
+void UART_Send_Str(char *str);
+void UART_Send_Char(char _chr);
+void UART_Receive_Data();
+void UART_Printf_Number(long number);
+void UART_Printf_Str(char ch);
+void UART_IRQHandler(void);
+void UART_Printf_Float(double number, int decimalPlaces);
 
 extern char arr[MAX];
 extern char received_data[MAX];

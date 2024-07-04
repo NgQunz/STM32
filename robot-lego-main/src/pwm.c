@@ -1,6 +1,7 @@
 #include "pwm.h"
 
-void Pwm_Init(void){	
+void Pwm_Init(void)
+{	
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
 	TIM_OCInitTypeDef  TIM_OCInitStructure;
 	GPIO_InitTypeDef GPIO_TypeDefStructure;

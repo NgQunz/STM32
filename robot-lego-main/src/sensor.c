@@ -9,7 +9,7 @@ void Sensor_Init(void){
 	GPIO_Init(SENSOR_PORT, &GPIO_InitTypeDefStructure);
 }
 
-uint8_t Sensor_Read(uint8_t pin){
+uint8_t Sensor_Read(uint16_t pin){
 	if(GPIO_ReadInputDataBit(SENSOR_PORT, pin) == Bit_SET)
 		return SENSOR_ON;
 	else

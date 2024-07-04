@@ -16,10 +16,10 @@
 
 #include "stm32f10x.h"                  // Device header
 
-void timer_Init(void);
+void Timer_Init(void);
 void Delay_1ms(void);
 void Delay_ms(unsigned int time);
-void led_Init(void);
+void Led_Init(void);
 	 
 #ifdef __cplusplus
 }

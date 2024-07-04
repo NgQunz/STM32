@@ -18,7 +18,7 @@ int main(void)
 	{
 		UARTPrintf_Number(100000);
 		value_adc=  ADCx_Read();
-		UARTPrintf_Number(value_adc);
+		//UARTPrintf_Number(value_adc);
 		Delay_ms(1000);
 	}
 }

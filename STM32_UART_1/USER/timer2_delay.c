@@ -8,7 +8,7 @@
 */
 #include "timer2_delay.h"
 
-void timer_Init(void){
+void Timer_Init(void){
 		TIM_TimeBaseInitTypeDef timer_init;
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
     timer_init.TIM_CounterMode = TIM_CounterMode_Up;
@@ -30,7 +30,7 @@ void Delay_ms(unsigned int time){
 	Delay_1ms();
 	}
 }
-void led_Init(void){
+void Led_Init(void){
 	GPIO_InitTypeDef led_init;
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
 	led_init.GPIO_Mode = GPIO_Mode_Out_PP;
