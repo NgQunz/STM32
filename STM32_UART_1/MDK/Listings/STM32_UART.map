@@ -19,6 +19,15 @@ Section Cross References
     timer2_delay.o(.text.Led_Init) refers to stm32f10x_rcc.o(.text.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
     timer2_delay.o(.text.Led_Init) refers to stm32f10x_gpio.o(.text.GPIO_Init) for GPIO_Init
     timer2_delay.o(.ARM.exidx.text.Led_Init) refers to timer2_delay.o(.text.Led_Init) for [Anonymous Symbol]
+    main.o(.text.init) refers to timer2_delay.o(.text.Timer_Init) for Timer_Init
+    main.o(.text.init) refers to uart.o(.text.UART_Config) for UART_Config
+    main.o(.text.init) refers to uart.o(.text.GPIO_Config_TX_RX) for GPIO_Config_TX_RX
+    main.o(.ARM.exidx.text.init) refers to main.o(.text.init) for [Anonymous Symbol]
+    main.o(.text.main) refers to timer2_delay.o(.text.Timer_Init) for Timer_Init
+    main.o(.text.main) refers to uart.o(.text.UART_Config) for UART_Config
+    main.o(.text.main) refers to uart.o(.text.GPIO_Config_TX_RX) for GPIO_Config_TX_RX
+    main.o(.text.main) refers to uart.o(.text.UART_IRQHandler) for UART_IRQHandler
+    main.o(.ARM.exidx.text.main) refers to main.o(.text.main) for [Anonymous Symbol]
     uart.o(.text.UART_Config) refers to stm32f10x_rcc.o(.text.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
     uart.o(.text.UART_Config) refers to stm32f10x_usart.o(.text.USART_Init) for USART_Init
     uart.o(.text.UART_Config) refers to stm32f10x_usart.o(.text.USART_Cmd) for USART_Cmd
@@ -61,15 +70,6 @@ Section Cross References
     uart.o(.text.UARTPrintf_Int_Number) refers to stm32f10x_usart.o(.text.USART_SendData) for USART_SendData
     uart.o(.text.UARTPrintf_Int_Number) refers to stm32f10x_usart.o(.text.USART_GetFlagStatus) for USART_GetFlagStatus
     uart.o(.ARM.exidx.text.UARTPrintf_Int_Number) refers to uart.o(.text.UARTPrintf_Int_Number) for [Anonymous Symbol]
-    main.o(.text.init) refers to timer2_delay.o(.text.Timer_Init) for Timer_Init
-    main.o(.text.init) refers to uart.o(.text.UART_Config) for UART_Config
-    main.o(.text.init) refers to uart.o(.text.GPIO_Config_TX_RX) for GPIO_Config_TX_RX
-    main.o(.ARM.exidx.text.init) refers to main.o(.text.init) for [Anonymous Symbol]
-    main.o(.text.main) refers to timer2_delay.o(.text.Timer_Init) for Timer_Init
-    main.o(.text.main) refers to uart.o(.text.UART_Config) for UART_Config
-    main.o(.text.main) refers to uart.o(.text.GPIO_Config_TX_RX) for GPIO_Config_TX_RX
-    main.o(.text.main) refers to uart.o(.text.UART_IRQHandler) for UART_IRQHandler
-    main.o(.ARM.exidx.text.main) refers to main.o(.text.main) for [Anonymous Symbol]
     misc.o(.ARM.exidx.text.NVIC_PriorityGroupConfig) refers to misc.o(.text.NVIC_PriorityGroupConfig) for [Anonymous Symbol]
     misc.o(.ARM.exidx.text.NVIC_Init) refers to misc.o(.text.NVIC_Init) for [Anonymous Symbol]
     misc.o(.ARM.exidx.text.NVIC_SetVectorTable) refers to misc.o(.text.NVIC_SetVectorTable) for [Anonymous Symbol]
@@ -424,6 +424,11 @@ Removing Unused input sections from the image.
     Removing timer2_delay.o(.ARM.exidx.text.Delay_ms), (8 bytes).
     Removing timer2_delay.o(.text.Led_Init), (40 bytes).
     Removing timer2_delay.o(.ARM.exidx.text.Led_Init), (8 bytes).
+    Removing main.o(.text), (0 bytes).
+    Removing main.o(.text.init), (18 bytes).
+    Removing main.o(.ARM.exidx.text.init), (8 bytes).
+    Removing main.o(.ARM.exidx.text.main), (8 bytes).
+    Removing main.o(.ARM.use_no_argv), (4 bytes).
     Removing uart.o(.text), (0 bytes).
     Removing uart.o(.ARM.exidx.text.UART_Config), (8 bytes).
     Removing uart.o(.ARM.exidx.text.GPIO_Config_TX_RX), (8 bytes).
@@ -442,11 +447,6 @@ Removing Unused input sections from the image.
     Removing uart.o(.ARM.exidx.text.UARTPrintf_Int_Number), (8 bytes).
     Removing uart.o(.bss.arr), (20 bytes).
     Removing uart.o(.bss.temp_char), (1 bytes).
-    Removing main.o(.text), (0 bytes).
-    Removing main.o(.text.init), (18 bytes).
-    Removing main.o(.ARM.exidx.text.init), (8 bytes).
-    Removing main.o(.ARM.exidx.text.main), (8 bytes).
-    Removing main.o(.ARM.use_no_argv), (4 bytes).
     Removing misc.o(.text), (0 bytes).
     Removing misc.o(.text.NVIC_PriorityGroupConfig), (20 bytes).
     Removing misc.o(.ARM.exidx.text.NVIC_PriorityGroupConfig), (8 bytes).
@@ -1210,7 +1210,7 @@ Memory Map of the image
     0x08000224   0x08000224   0x00000002   Code   RO          619    .text               c_w.l(use_no_semi.o)
     0x08000226   0x08000226   0x00000000   Code   RO          621    .text               c_w.l(indicate_semi.o)
     0x08000226   0x08000226   0x00000002   PAD
-    0x08000228   0x08000228   0x00000042   Code   RO           20    .text.GPIO_Config_TX_RX  uart.o
+    0x08000228   0x08000228   0x00000042   Code   RO           32    .text.GPIO_Config_TX_RX  uart.o
     0x0800026a   0x0800026a   0x00000002   PAD
     0x0800026c   0x0800026c   0x000000c0   Code   RO           83    .text.GPIO_Init     stm32f10x_gpio.o
     0x0800032c   0x0800032c   0x00000018   Code   RO          170    .text.RCC_APB1PeriphClockCmd  stm32f10x_rcc.o
@@ -1223,9 +1223,9 @@ Memory Map of the image
     0x080005ca   0x080005ca   0x00000002   PAD
     0x080005cc   0x080005cc   0x00000036   Code   RO            2    .text.Timer_Init    timer2_delay.o
     0x08000602   0x08000602   0x00000002   PAD
-    0x08000604   0x08000604   0x0000003e   Code   RO           18    .text.UART_Config   uart.o
+    0x08000604   0x08000604   0x0000003e   Code   RO           30    .text.UART_Config   uart.o
     0x08000642   0x08000642   0x00000002   PAD
-    0x08000644   0x08000644   0x000000b6   Code   RO           32    .text.UART_IRQHandler  uart.o
+    0x08000644   0x08000644   0x000000b6   Code   RO           44    .text.UART_IRQHandler  uart.o
     0x080006fa   0x080006fa   0x00000002   PAD
     0x080006fc   0x080006fc   0x00000014   Code   RO          390    .text.USART_Cmd     stm32f10x_usart.o
     0x08000710   0x08000710   0x0000000a   Code   RO          430    .text.USART_GetFlagStatus  stm32f10x_usart.o
@@ -1235,7 +1235,7 @@ Memory Map of the image
     0x08000802   0x08000802   0x00000002   PAD
     0x08000804   0x08000804   0x00000008   Code   RO          408    .text.USART_ReceiveData  stm32f10x_usart.o
     0x0800080c   0x0800080c   0x00000008   Code   RO          406    .text.USART_SendData  stm32f10x_usart.o
-    0x08000814   0x08000814   0x00000012   Code   RO           51    .text.main          main.o
+    0x08000814   0x08000814   0x00000012   Code   RO           20    .text.main          main.o
     0x08000826   0x08000826   0x00000004   Data   RO          189    .rodata.ADCPrescTable  stm32f10x_rcc.o
     0x0800082a   0x0800082a   0x00000010   Data   RO          188    .rodata.APBAHBPrescTable  stm32f10x_rcc.o
     0x0800083a   0x0800083a   0x00000002   PAD
@@ -1247,9 +1247,9 @@ Memory Map of the image
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x20000000        -       0x00000060   Zero   RW          542    .bss                c_w.l(libspace.o)
-    0x20000060        -       0x00000004   Zero   RW           36    .bss.count          uart.o
-    0x20000064        -       0x00000014   Zero   RW           38    .bss.received_data  uart.o
-    0x20000078        -       0x00000004   Zero   RW           37    .bss.vtri_stt       uart.o
+    0x20000060        -       0x00000004   Zero   RW           48    .bss.count          uart.o
+    0x20000064        -       0x00000014   Zero   RW           50    .bss.received_data  uart.o
+    0x20000078        -       0x00000004   Zero   RW           49    .bss.vtri_stt       uart.o
     0x2000007c   0x0800084c   0x00000004   PAD
     0x20000080        -       0x00000200   Zero   RW          446    HEAP                startup_stm32f10x_md.o
     0x20000280        -       0x00000400   Zero   RW          445    STACK               startup_stm32f10x_md.o

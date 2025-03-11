@@ -35,7 +35,7 @@ void Config(void)
 	GPIO.GPIO_Pin = GPIO_Pin_13;
 	GPIO.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOC, &GPIO);
-	GPIO.GPIO_Mode = GPIO_Mode_Out_PP;
+	GPIO.GPIO_Mode = GPIO_Mode_IPU;
 	GPIO.GPIO_Pin = GPIO_Pin_1;
 	GPIO.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO);

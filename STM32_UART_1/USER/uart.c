@@ -23,6 +23,7 @@ void UART_Config (void){
 	uart.USART_WordLength = USART_WordLength_8b ;
 	USART_Init ( USART1, &uart);
 	USART_Cmd (USART1, ENABLE);
+	GPIO_Config_TX_RX();
 }
 
 void GPIO_Config_TX_RX(){

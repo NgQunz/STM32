@@ -4,8 +4,9 @@
 int main(){
 	timer_Init();
 	led_Init();
-	Config();
+	GPIO_Config();
 	while(1){
 		led_Blink();
 	}
 }
+	
