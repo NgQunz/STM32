@@ -63,27 +63,122 @@
 // 			;
 // 	}
 // }
-#include "stm32f10x.h"		// Device header
-#include "stm32f10x_gpio.h" // Keil::Device:StdPeriph Drivers:GPIO
-#include "stm32f10x_rcc.h"	// Keil::Device:StdPeriph Drivers:RCC
+//#include "stm32f10x.h"		// Device header
+//#include "stm32f10x_gpio.h" // Keil::Device:StdPeriph Drivers:GPIO
+//#include "stm32f10x_rcc.h"	// Keil::Device:StdPeriph Drivers:RCC
+
+//#define LED_DONVI GPIO_Pin_15
+//#define LED_CHUC GPIO_Pin_14
+//#define LED_TRAM GPIO_Pin_13
+//#define LED_NGHIN GPIO_Pin_12
+
+//unsigned int NUM[] = {0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x90};
+
+//void Delay_ms(uint16_t _time);
+//void led_Init(void);
+//void ledcontrol_Init(void);
+//void led_Counter1(void);
+//int main()
+//{
+//	led_Init();
+//	ledcontrol_Init();
+//	while (1)
+//	{
+//		led_Counter1();
+//	}
+//}
+
+//void Delay_ms(uint16_t _time)
+//{
+//	uint16_t i, j;
+//	for (i = 0; i < _time; i++)
+//	{
+//		for (j = 0; j < 7999; j++)
+//			;
+//	}
+//}
+
+//void led_Init(void)
+//{
+//	GPIO_InitTypeDef led_init;
+//	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+//	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
+//	led_init.GPIO_Mode = GPIO_Mode_Out_PP;
+//	led_init.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 |
+//						GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
+//	led_init.GPIO_Speed = GPIO_Speed_50MHz;
+//	GPIO_Init(GPIOA, &led_init);
+//	GPIOA->ODR = 0XFF;
+//}
+
+//void ledcontrol_Init(void)
+//{
+//	GPIO_InitTypeDef button_init;
+//	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+//	button_init.GPIO_Mode = GPIO_Mode_Out_PP;
+//	button_init.GPIO_Pin = LED_NGHIN | LED_TRAM | LED_CHUC | LED_DONVI;
+//	button_init.GPIO_Speed = GPIO_Speed_50MHz;
+//	GPIO_Init(GPIOB, &button_init);
+//	GPIOB->ODR = 0xffff;
+//}
+
+//void led_Counter1(void)
+//{
+//	uint16_t i, j;
+//	for (i = 0; i < 10000; i++)
+//	{
+//		for (j = 0; j < 24; j++)
+//		{
+//			/*quet led hang don vi*/
+//			GPIO_ResetBits(GPIOB, LED_DONVI);
+//			GPIOA->ODR = NUM[i % 10];
+//			Delay_ms(10);
+//			GPIO_SetBits(GPIOB, LED_DONVI);
+//			// GPIOB->ODR = 0xffff;
+
+//			/*quet led hang chuc vi*/
+//			GPIO_ResetBits(GPIOB, LED_CHUC);
+//			GPIOA->ODR = NUM[(i / 10) % 10];
+//			Delay_ms(10);
+//			GPIO_SetBits(GPIOB, LED_CHUC);
+//			// GPIOB->ODR = 0xffff;
+//			/*quet led hang tram*/
+//			GPIO_ResetBits(GPIOB, LED_TRAM);
+//			GPIOA->ODR = NUM[(i / 100) % 10];
+//			Delay_ms(10);
+//			GPIO_SetBits(GPIOB, LED_TRAM);
+
+//			/*quet led hang nghin*/
+//			GPIO_ResetBits(GPIOB, LED_NGHIN);
+//			GPIOA->ODR = NUM[i / 1000];
+//			Delay_ms(10);
+//			GPIO_SetBits(GPIOB, LED_NGHIN);
+//		}
+//	}
+//}
+#include "stm32f10x.h"
+#include "stm32f10x_gpio.h"
+#include "stm32f10x_rcc.h"
 
 #define LED_DONVI GPIO_Pin_15
 #define LED_CHUC GPIO_Pin_14
 #define LED_TRAM GPIO_Pin_13
-#define LED_NGHIN GPIO_Pin_12
 
-unsigned int NUM[] = {0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x90};
+unsigned int NUM[] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F};
+
 
 void Delay_ms(uint16_t _time);
 void led_Init(void);
 void ledcontrol_Init(void);
 void led_Counter1(void);
+
 int main()
 {
 	led_Init();
 	ledcontrol_Init();
 	while (1)
 	{
+
 		led_Counter1();
 	}
 }
@@ -104,55 +199,56 @@ void led_Init(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	led_init.GPIO_Mode = GPIO_Mode_Out_PP;
-	led_init.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 |
-						GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
+	led_init.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | 
+						GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
 	led_init.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &led_init);
-	GPIOA->ODR = 0XFF;
+	GPIOA->ODR = 0xFF;
 }
 
 void ledcontrol_Init(void)
 {
-	GPIO_InitTypeDef button_init;
+	GPIO_InitTypeDef led_control;
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
-	button_init.GPIO_Mode = GPIO_Mode_Out_PP;
-	button_init.GPIO_Pin = LED_NGHIN | LED_TRAM | LED_CHUC | LED_DONVI;
-	button_init.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOB, &button_init);
-	GPIOB->ODR = 0xffff;
+	led_control.GPIO_Mode = GPIO_Mode_Out_PP;
+	led_control.GPIO_Pin = LED_TRAM | LED_CHUC | LED_DONVI;
+	led_control.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &led_control);
+	GPIOB->ODR = 0xFFFF;
 }
 
 void led_Counter1(void)
 {
-	uint16_t i, j;
-	for (i = 0; i < 10000; i++)
+	uint16_t i;
+	uint16_t elapsed = 0;
+	while (1)
 	{
-		for (j = 0; j < 24; j++)
-		{
-			/*quet led hang don vi*/
-			GPIO_ResetBits(GPIOB, LED_DONVI);
-			GPIOA->ODR = NUM[i % 10];
-			Delay_ms(10);
-			GPIO_SetBits(GPIOB, LED_DONVI);
-			// GPIOB->ODR = 0xffff;
+			i = 255;
+			
+			while (elapsed < 1000) // hi?n th? s? trong 1000ms
+			{
+				// Hàng don v?
+				GPIO_ResetBits(GPIOB, LED_DONVI);
+				GPIOA->ODR = NUM[i % 10];
+				Delay_ms(5);
+				GPIO_SetBits(GPIOB, LED_DONVI);
 
-			/*quet led hang chuc vi*/
-			GPIO_ResetBits(GPIOB, LED_CHUC);
-			GPIOA->ODR = NUM[(i / 10) % 10];
-			Delay_ms(10);
-			GPIO_SetBits(GPIOB, LED_CHUC);
-			// GPIOB->ODR = 0xffff;
-			/*quet led hang tram*/
-			GPIO_ResetBits(GPIOB, LED_TRAM);
-			GPIOA->ODR = NUM[(i / 100) % 10];
-			Delay_ms(10);
-			GPIO_SetBits(GPIOB, LED_TRAM);
+				// Hàng ch?c
+				GPIO_ResetBits(GPIOB, LED_CHUC);
+				GPIOA->ODR = NUM[(i / 10) % 10];
+				Delay_ms(5);
+				GPIO_SetBits(GPIOB, LED_CHUC);
 
-			/*quet led hang nghin*/
-			GPIO_ResetBits(GPIOB, LED_NGHIN);
-			GPIOA->ODR = NUM[i / 1000];
-			Delay_ms(10);
-			GPIO_SetBits(GPIOB, LED_NGHIN);
+				// Hàng tram
+				GPIO_ResetBits(GPIOB, LED_TRAM);
+				GPIOA->ODR = NUM[i / 100];
+				Delay_ms(5);
+				GPIO_SetBits(GPIOB, LED_TRAM);
+
+				// T?ng 1 l?n quét: ~15ms
+				elapsed += 15;
+			}
 		}
-	}
+
 }
+

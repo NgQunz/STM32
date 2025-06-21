@@ -1,11 +1,11 @@
 .\objects\main.o: ..\User\main.c
-.\objects\main.o: C:\Pack_KeilCV5\Keil\STM32F1xx_DFP\2.4.1\Device\Include\stm32f10x.h
+.\objects\main.o: C:\Users\OS\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include\stm32f10x.h
 .\objects\main.o: ..\Lib\CMSIS\CM3\CoreSupport\core_cm3.h
 .\objects\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\main.o: C:\Pack_KeilCV5\Keil\STM32F1xx_DFP\2.4.1\Device\Include\system_stm32f10x.h
+.\objects\main.o: C:\Users\OS\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include\system_stm32f10x.h
 .\objects\main.o: ..\Lib\CMSIS\CM3\CoreSupport\stm32f10x_conf.h
 .\objects\main.o: ..\Lib\STM32F10x_StdPeriph_Driver\inc\stm32f10x_adc.h
-.\objects\main.o: C:\Pack_KeilCV5\Keil\STM32F1xx_DFP\2.4.1\Device\Include\stm32f10x.h
+.\objects\main.o: C:\Users\OS\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include\stm32f10x.h
 .\objects\main.o: ..\Lib\STM32F10x_StdPeriph_Driver\inc\stm32f10x_bkp.h
 .\objects\main.o: ..\Lib\STM32F10x_StdPeriph_Driver\inc\stm32f10x_can.h
 .\objects\main.o: ..\Lib\STM32F10x_StdPeriph_Driver\inc\stm32f10x_cec.h
