@@ -613,48 +613,24 @@
 #include "stm32f10x_exti.h"             // Keil::Device:StdPeriph Drivers:EXTI
 #include "stm32f10x.h"     
 static volatile uint32_t counter_ms = 0; 
+volatile uint32_t msTicks = 0;
 
-void Timer2_Init(void)
+void SysTick_Handler(void)
 {
-    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
-
-    TIM2->PSC = 72 - 1;       // Prescaler: 1 MHz (1 tick = 1 µs)
-    TIM2->ARR = 1000 - 1;     // Auto-reload: 1000 µs = 1 ms
-
-    TIM2->DIER |= TIM_DIER_UIE;
-
-    TIM2->CR1 |= TIM_CR1_CEN;
-
-
-    NVIC_SetPriority(TIM2_IRQn, 1); 
-    NVIC_EnableIRQ(TIM2_IRQn);
+    msTicks++;
 }
 
-void TIM2_IRQHandler(void)
+void delay_ms(uint32_t ms)
 {
-    if (TIM2->SR & TIM_SR_UIF)
-    {
-        TIM2->SR &= ~TIM_SR_UIF;
-        counter_ms++;           
-    }
+    uint32_t start = msTicks;
+    while ((msTicks - start) < ms);
 }
 
-uint32_t millis(void)
+void SysTick_Config_ms(void)
 {
-    return counter_ms; 
+    SysTick_Config(SystemCoreClock / 1000); // Ng?t m?i 1ms (v?i HCLK = 72MHz)
 }
 
-void Delay_ms(uint32_t ms)
-{
-    uint32_t start_time = millis();
-    while ((millis() - start_time) < ms); 
-}
-
-void Delay_us(uint16_t us)
-{
-    TIM2->CNT = 0; // Reset counter
-    while (TIM2->CNT < us);
-}
 void GPIO_Config(void){
 	GPIO_InitTypeDef GPIO;
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOC, ENABLE);
@@ -670,12 +646,12 @@ void GPIO_Config(void){
 int main(void)
 {
     GPIO_Config();     
-    Timer2_Init();   
+    SysTick_Config_ms();   
 		
     while (1)
     {
         GPIOC->ODR ^= GPIO_ODR_ODR13; 
-        Delay_ms(1000);               
+        delay_ms(1000);               
     }
 }
 

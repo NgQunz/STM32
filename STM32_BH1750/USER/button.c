@@ -19,7 +19,7 @@ void GPIO_Config(void)
     GPIO_SetBits(GPIOC, GPIO_Pin_13); // LED t?t khi kh?i d?ng
 
     // C?u h�nh button input pull-up (PA8)
-    GPIO.GPIO_Pin = GPIO_Pin_8|| GPIO_Pin_6;
+    GPIO.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_6;
     GPIO.GPIO_Mode = GPIO_Mode_IPU;
     GPIO.GPIO_Speed = GPIO_Speed_2MHz;
     GPIO_Init(GPIOA, &GPIO);
