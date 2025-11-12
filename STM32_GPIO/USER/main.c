@@ -6,18 +6,18 @@
 
 void GPIO_Config(void){
     GPIO_InitTypeDef GPIO;
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); // B?t xung cho GPIOA
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE); // B?t xung cho GPIOA
 
     GPIO.GPIO_Mode = GPIO_Mode_Out_PP;
-    GPIO.GPIO_Pin = GPIO_Pin_5;  // S? d?ng PA5
+    GPIO.GPIO_Pin = GPIO_Pin_13;  // S? d?ng PA5
     GPIO.GPIO_Speed = GPIO_Speed_50MHz;
-    GPIO_Init(GPIOB, &GPIO);
+    GPIO_Init(GPIOC, &GPIO);
 }
 
 void led_Blink(void){
-    GPIO_ResetBits(GPIOB, GPIO_Pin_5); // LED ON (PA5 LOW)
+    GPIO_ResetBits(GPIOC, GPIO_Pin_13); // LED ON (PC13 LOW)
     Delay_ms(500);
-    GPIO_SetBits(GPIOB, GPIO_Pin_5);   // LED OFF (PA5 HIGH)
+    GPIO_SetBits(GPIOC, GPIO_Pin_13);   // LED OFF (PC13 HIGH)
     Delay_ms(500);
 }
 

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\GPIO_1_LED.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\GPIO_1_LED.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Thu May 15 19:48:14 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Fri Oct 24 15:00:26 2025
 <BR><P>
 <H3>Maximum Stack Usage =         40 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -485,7 +485,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_Blink
 </UL>
 
-<P><STRONG><a name="[4d]"></a>GPIO_Config</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, main.o(.text.GPIO_Config))
+<P><STRONG><a name="[4d]"></a>GPIO_Config</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, main.o(.text.GPIO_Config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = GPIO_Config &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RCC_APB2PeriphClockCmd
@@ -540,7 +540,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_Init
 </UL>
 
-<P><STRONG><a name="[52]"></a>led_Blink</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, main.o(.text.led_Blink))
+<P><STRONG><a name="[52]"></a>led_Blink</STRONG> (Thumb, 48 bytes, Stack size 8 bytes, main.o(.text.led_Blink))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = led_Blink &rArr; Delay_ms &rArr; Delay_1ms
 </UL>
 <BR>[Calls]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits

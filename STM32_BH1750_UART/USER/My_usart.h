@@ -30,7 +30,6 @@ void USART1_IRQHandler(void);
 /// can use printf instead, do not neccessary to use these function
 void printf_string(uint8_t *str); /// send a string to COM
 void printf_num(int32_t num); /// send a number to COM
-void uart_handle_command(void);
 /*******************************************************************************************/
 #ifdef __cplusplus
 }

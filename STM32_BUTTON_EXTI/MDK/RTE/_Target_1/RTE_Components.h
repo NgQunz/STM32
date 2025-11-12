@@ -1,9 +1,9 @@
 
 /*
- * Auto generated Run-Time-Environment Component Configuration File
+ * Auto generated Run-Time-Environment Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'STM32_ADC' 
+ * Project: 'STM32_BUTTON_EXTI' 
  * Target:  'Target 1' 
  */
 
@@ -16,11 +16,14 @@
  */
 #define CMSIS_device_header "stm32f10x.h"
 
-#define RTE_DEVICE_STDPERIPH_ADC
+/*  Keil::Device:StdPeriph Drivers:EXTI:3.6.0 */
+#define RTE_DEVICE_STDPERIPH_EXTI
+/*  Keil::Device:StdPeriph Drivers:Framework:3.6.0 */
 #define RTE_DEVICE_STDPERIPH_FRAMEWORK
+/*  Keil::Device:StdPeriph Drivers:GPIO:3.6.0 */
 #define RTE_DEVICE_STDPERIPH_GPIO
+/*  Keil::Device:StdPeriph Drivers:RCC:3.6.0 */
 #define RTE_DEVICE_STDPERIPH_RCC
-#define RTE_DEVICE_STDPERIPH_TIM
-#define RTE_DEVICE_STDPERIPH_USART
+
 
 #endif /* RTE_COMPONENTS_H */

@@ -50,7 +50,7 @@ void exti_Init(void){
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOC, GPIO_PinSource14);
 	exti_init.EXTI_Line = EXTI_Line14 | EXTI_Line8;		// Chon pin
 	exti_init.EXTI_Mode = EXTI_Mode_Interrupt;		// Chon mode la ngat
-	exti_init.EXTI_Trigger=EXTI_Trigger_Falling;	// Chon suon ngat
+	exti_init.EXTI_Trigger = EXTI_Trigger_Falling;	// Chon suon ngat
 	exti_init.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&exti_init);
 	
@@ -58,12 +58,13 @@ void exti_Init(void){
 void nvic_Init(void){
 	NVIC_InitTypeDef NVIC_ST;
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
-	NVIC_ST.NVIC_IRQChannel=EXTI15_10_IRQn;
+	NVIC_ST.NVIC_IRQChannel=EXTI15_10_IRQn; 
 	NVIC_ST.NVIC_IRQChannelSubPriority=0;
+	NVIC_ST.NVIC_IRQChannelPreemptionPriority=0;
 	NVIC_ST.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_ST);
 	
-	NVIC_ST.NVIC_IRQChannel = EXTI9_5_IRQn ;
+	NVIC_ST.NVIC_IRQChannel = EXTI9_5_IRQn;
 	NVIC_Init(&NVIC_ST);
 }
 void EXTI15_10_IRQHandler(void){
@@ -72,8 +73,6 @@ void EXTI15_10_IRQHandler(void){
 		EXTI_ClearITPendingBit(EXTI_Line14);
 	}	
 }
-
-
 void EXTI9_5_IRQ_Handler(void)
 {
 	if( EXTI_GetITStatus(EXTI_Line8)!=RESET)

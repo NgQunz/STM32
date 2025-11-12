@@ -1,6 +1,6 @@
 --cpu Cortex-M3
-".\objects\gpio.o"
 ".\objects\main.o"
+".\objects\gpio.o"
 ".\objects\timer2_delay.o"
 ".\objects\misc.o"
 ".\objects\stm32f10x_gpio.o"

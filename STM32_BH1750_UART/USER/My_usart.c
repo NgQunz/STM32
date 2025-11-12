@@ -18,7 +18,7 @@
 // #endif
 
 
-uint16_t light_threshold = 50;
+uint16_t light_threshold = 100;
 uint32_t ti_check_lux = 1000;
 uint16_t light;
 
@@ -45,12 +45,12 @@ volatile uint16_t receive_length = 0;
 void usart1_cfg_A9A10(uint32_t baud_rate) /// datasheet, trang 31, bang remap
 {
   /// cap clock cho uart1
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE); /// Cấp clock cho USART1R
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);  /// Cấp clock cho GPIOA
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE); /// Cáº¥p clock cho USART1R
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);  /// Cáº¥p clock cho GPIOA
 
-  /// cấu hình gpio cho A9,A10
+  /// cáº¥u hÃ¬nh gpio cho A9,A10
   //  GPIO_PinRemapConfig(GPIO_Remap_USART1,ENABLE);
-  /// remap các pin cho USART1.
+  /// remap cÃ¡c pin cho USART1.
   /// datasheet, trang 31, bang remap
 
   GPIO_InitTypeDef GPIO_struct;
@@ -131,37 +131,18 @@ void uart_handle_command(void)
         printf_num(light_threshold);
         printf_string(" lux\r\n");
     }
-    else if (strncmp((char*)RX_Buffer, "SET_CHECK_INTERVAL:", 19) == 0)
-    {
-        int seconds = atoi((char*)&RX_Buffer[19]);
-        ti_check_lux = seconds*1000;
-
-        printf_string("Da thiet lap interval = ");
-        printf_num(ti_check_lux);
-        printf_string(" ms\r\n");
-    }
     else if (strncmp((char*)RX_Buffer, "LIGHT_INTENSITY:", 16) == 0)
     {
         printf_string("LIGHT_INTENSITY: ");
         printf_num(light);
         printf_string(" lx\r\n");
     }
-    else if (strncmp((char*)RX_Buffer, "INFO_REQUEST:GROUP", 18) == 0)
-    {
-        // Gửi thông tin nhóm theo định dạng trong ảnh
-        printf_string("GROUP_NAME: Nhom 7\r\n");
-        printf_string("MEMBERS: Tu, Son, Nam, Nhan, Tuan\r\n");
-        printf_string("PROJECT_NAME: Light Intensity Monitoring and Warning System\r\n");
-        printf_string("HARDWARE_USED: STM32, BH1750, LCD16×2\r\n");
-        printf_string("SOFTWARE_USED: Keil, Cmisis Library\r\n");
-        printf_string("DATE: 2025-05-15\r\n");
-    }
     else
     {
         printf_string("Lenh khong hop le!\r\n");
     }
 
-    // 🔁 Reset buffer sau khi xử lý
+    // ðŸ” Reset buffer sau khi xá»­ lÃ½
     for (int i = 0; i < string_size; i++) RX_Buffer[i] = 0;
     receive_length = 0;
     RX_index = 0;
@@ -171,31 +152,31 @@ void uart_handle_command(void)
 
 
 static void send_char(uint8_t c)
-{ /// Hàm gửi một kí tự ra COM
+{ /// HÃ m gá»­i má»™t kÃ­ tá»± ra COM
   //  USART_ClearFlag(USART2,USART_FLAG_TXE);
   USART_SendData(USART1, c);
   while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)
-    ; /// chờ đến khi cờ TXE được set -> đã chuyển xong một frame
+    ; /// chá» Ä‘áº¿n khi cá» TXE Ä‘Æ°á»£c set -> Ä‘Ã£ chuyá»ƒn xong má»™t frame
 }
 
 void printf_string(uint8_t *str)
-{ /// hàm đưa một xâu kí tự ra COM
+{ /// hÃ m Ä‘Æ°a má»™t xÃ¢u kÃ­ tá»± ra COM
   while ((*(str)) != NULL)
   {
     send_char(*(str++));
   }
   while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET)
   {
-  }; /// Chờ đến khi cờ TC được set -> kết thúc quá trình truyền
+  }; /// Chá» Ä‘áº¿n khi cá» TC Ä‘Æ°á»£c set -> káº¿t thÃºc quÃ¡ trÃ¬nh truyá»n
 }
 
 static char convert_int_to_char(uint8_t n)
-{ /// hàm chuyển đổi số ra kiểu char
+{ /// hÃ m chuyá»ƒn Ä‘á»•i sá»‘ ra kiá»ƒu char
   return n + 48;
 }
 
 void printf_num(int32_t num)
-{ /// hàm đưa một số ra COM
+{ /// hÃ m Ä‘Æ°a má»™t sá»‘ ra COM
   if (!num)
   {
     send_char(convert_int_to_char(num));

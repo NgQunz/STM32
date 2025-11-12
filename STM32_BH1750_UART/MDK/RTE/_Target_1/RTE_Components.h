@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'bth so 2' 
+ * Project: 'STM32_BH1750_UART' 
  * Target:  'Target 1' 
  */
 

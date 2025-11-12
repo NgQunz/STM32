@@ -5,44 +5,55 @@
 <h2>Tool Versions:</h2>
 IDE-Version: µVision V5.31.0.0
 Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: Nguyen Quan, PTIT, LIC=IK1BF-68DT8-X7PRZ-JRGLZ-8KHD4-C4BS6
+License Information: QUAN NGUYEN, PTIT, LIC=UJWP0-BJ167-Z9LG9-4C345-RI7F6-DK5QU
  
 Tool Versions:
 Toolchain:       MDK-ARM Plus  Version: 5.31.0.0
-Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
-C Compiler:      Armcc.exe V5.06 update 6 (build 750)
-Assembler:       Armasm.exe V5.06 update 6 (build 750)
-Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
-Library Manager: ArmAr.exe V5.06 update 6 (build 750)
-Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.14
+Assembler:       Armasm.exe V6.14
+Linker/Locator:  ArmLink.exe V6.14
+Library Manager: ArmAr.exe V6.14
+Hex Converter:   FromElf.exe V6.14
 CPU DLL:         SARMCM3.DLL V5.31.0.0
 Dialog DLL:      DCM.DLL V1.17.3.0
 Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.7.0
 Dialog DLL:      TCM.DLL V1.46.0.0
  
 <h2>Project:</h2>
-D:\STM32_PROJECT\STM32_BUTTON\MDK\STM32_BUTTON.uvprojx
-Project File Date:  05/08/2025
+D:\STM32\STM32_BUTTON\MDK\STM32_BUTTON.uvprojx
+Project File Date:  10/24/2025
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+*** Using Compiler 'V6.14', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target 1'
-assembling startup_stm32f10x_md.s...
+compiling stm32f10x_gpio.c...
+../USER/button.c(50): warning: incompatible pointer types passing 'bool *' to parameter of type 'uint8_t *' (aka 'unsigned char *') [-Wincompatible-pointer-types]
+            Toggle_LED(&led_state);         // Ch? thay d?i LED khi n<FA>t nh?n
+                       ^~~~~~~~~~
+../USER/button.c(38): note: passing argument to parameter 'led_State' here
+void Toggle_LED(uint8_t *led_State) {
+                         ^
+1 warning generated.
+compiling button.c...
+compiling stm32f10x_exti.c...
+../USER/main.c(8): warning: implicit declaration of function 'Button_EXTI_Config' is invalid in C99 [-Wimplicit-function-declaration]
+                Button_EXTI_Config();
+                ^
+1 warning generated.
+compiling main.c...
 compiling misc.c...
 compiling tim2.c...
-compiling main.c...
-compiling stm32f10x_gpio.c...
-compiling button.c...
-..\USER\button.c(50): warning:  #167-D: argument of type "bool *" is incompatible with parameter of type "uint8_t *"
-              Toggle_LED(&led_state);         // Ch? thay d?i LED khi nút nh?n
-..\USER\button.c: 1 warning, 0 errors
 compiling stm32f10x_rcc.c...
-compiling system_stm32f10x.c...
+assembling startup_stm32f10x_md.s...
 compiling GPIO_STM32F10x.c...
+compiling system_stm32f10x.c...
 linking...
-Program Size: Code=1464 RO-data=268 RW-data=8 ZI-data=1632  
-FromELF: creating hex file...
-".\Objects\BUTTON.axf" - 0 Error(s), 1 Warning(s).
+.\Objects\BUTTON.axf: Error: L6218E: Undefined symbol Button_EXTI_Config (referred from main.o).
+Not enough information to list image symbols.
+Not enough information to list load addresses in the image map.
+Finished: 2 information, 0 warning and 1 error messages.
+".\Objects\BUTTON.axf" - 1 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -58,6 +69,7 @@ Package Vendor: Keil
                 STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
    * Component: GPIO Version: 1.3
    * Component: Startup Version: 1.0.0
+   * Component: EXTI Version: 3.6.0
    * Component: Framework Version: 3.6.0
    * Component: GPIO Version: 3.6.0
    * Component: RCC Version: 3.6.0
@@ -65,10 +77,10 @@ Package Vendor: Keil
 <h2>Collection of Component include folders:</h2>
   .\RTE\Device\STM32F103C8
   .\RTE\_Target_1
-  C:\Users\OS\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include
-  C:\Users\OS\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include
-  C:\Users\OS\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc
-  C:\Users\OS\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\RTE_Driver
+  C:\Users\nguye\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include
+  C:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include
+  C:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\StdPeriph_Driver\inc
+  C:\Users\nguye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\RTE_Driver
 
 <h2>Collection of Component Files used:</h2>
 
@@ -79,26 +91,31 @@ Package Vendor: Keil
       Source file:   RTE_Driver\GPIO_STM32F10x.c
 
    * Component: Keil::Device:Startup:1.0.0
-      Include file:  RTE_Driver\Config\RTE_Device.h
       Source file:   Device\Source\system_stm32f10x.c
-      Source file:   Device\Source\ARM\startup_stm32f10x_md.s
       Source file:   Device\Source\ARM\STM32F1xx_OPT.s
+      Source file:   Device\Source\ARM\startup_stm32f10x_md.s
+      Include file:  RTE_Driver\Config\RTE_Device.h
+
+   * Component: Keil::Device:StdPeriph Drivers:EXTI:3.6.0
+      Include file:  Device\StdPeriph_Driver\inc\stm32f10x_exti.h
+      Source file:   Device\StdPeriph_Driver\src\stm32f10x_exti.c
 
    * Component: Keil::Device:StdPeriph Drivers:Framework:3.6.0
       Include file:  Device\StdPeriph_Driver\inc\misc.h
-      Source file:   Device\StdPeriph_Driver\src\misc.c
       Source file:   Device\StdPeriph_Driver\templates\stm32f10x_it.c
-      Include file:  Device\StdPeriph_Driver\templates\stm32f10x_it.h
       Source file:   Device\StdPeriph_Driver\templates\stm32f10x_conf.h
+      Source file:   Device\StdPeriph_Driver\src\misc.c
+      Include file:  Device\StdPeriph_Driver\templates\stm32f10x_it.h
 
    * Component: Keil::Device:StdPeriph Drivers:GPIO:3.6.0
-      Include file:  Device\StdPeriph_Driver\inc\stm32f10x_gpio.h
       Source file:   Device\StdPeriph_Driver\src\stm32f10x_gpio.c
+      Include file:  Device\StdPeriph_Driver\inc\stm32f10x_gpio.h
 
    * Component: Keil::Device:StdPeriph Drivers:RCC:3.6.0
-      Source file:   Device\StdPeriph_Driver\src\stm32f10x_rcc.c
       Include file:  Device\StdPeriph_Driver\inc\stm32f10x_rcc.h
-Build Time Elapsed:  00:00:01
+      Source file:   Device\StdPeriph_Driver\src\stm32f10x_rcc.c
+Target not created.
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

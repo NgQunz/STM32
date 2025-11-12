@@ -384,14 +384,14 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\USER\gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\USER\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\gpio.c</FilePath>
             </File>
             <File>
               <FileName>timer2_delay.c</FileName>
