@@ -1,50 +1,41 @@
-/*
-  ******************************************************************************
-  * @file		LED_MATRIX.h                                                             *
-  * @author	Nguyen Minh Quan                                                 *
-  * @date		28/2/2024
-	* @ver 1.0
-  ******************************************************************************
-*/
-	
 #ifndef __UART_H__
 #define __UART_H__
 
-#ifdef __cplusplus
- extern "C" {
-#endif
-
 #include "stm32f10x.h"
-#include "stm32f10x_gpio.h"
-#include "stm32f10x_rcc.h"
-#include "stm32f10x_usart.h"
-#include "stm32f10x_tim.h"
-#include "string.h"
-#include "stdio.h"
-	 
-#define MAX 20
+#include <string.h>
+#include <stdio.h>
 
-void GPIO_Config_TX_RX();
-void USART_config(void);
-void led_Init(void);
-	 
-void UART_Send_Str(char *str);
-void UART_Send_Char(char _chr);
-void UART_Receive_Data();
-void UART_Printf_Number(long number);
-void UART_Printf_Str(char ch);
-void UART_IRQHandler(void);
-void UART_Printf_Float(double number, int decimalPlaces);
+#define MAX_BUFFER   128
+#define START_BYTE   0xAA
+#define END_BYTE     0x55
 
-extern char arr[MAX];
-extern char received_data[MAX];
-extern int count,vtri_stt;
-	 
-#ifdef __cplusplus
-}
+#define CMD_TEXT     0x01
+#define CMD_ACK      0x02
+
+typedef struct {
+    uint8_t start;
+    uint8_t cmd;
+    uint8_t len;
+    uint8_t data[64];
+    uint8_t checksum;
+    uint8_t end;
+} Message_t;
+
+void GPIO_Config_TX_RX(void);
+void USART1_Config(void);   // PC debug
+void USART2_Config(void);   // ESP32
+
+// PC
+void PC_Print(const char* str);
+void PC_Println(const char* str);
+
+// B?n tin v?i ESP32
+void MSG_Build(Message_t* msg, uint8_t cmd, uint8_t* data, uint8_t len);
+void MSG_Send_ESP32(Message_t* msg);
+uint8_t MSG_Receive_ESP32(Message_t* out_msg);
+uint8_t MSG_Checksum(Message_t* msg);
+
+// Nh?n t? PC (nh?p tay)
+uint8_t PC_ReadLine(char* buf, uint8_t maxlen);
+
 #endif
-
-#endif
-
-/********************************* END OF FILE ********************************/
-/******************************************************************************/

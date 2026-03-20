@@ -1,227 +1,176 @@
-/*
-  ******************************************************************************
-  * @file		uart.h                                                              *
-  * @author	Nguyen Minh Quan                                                *
-  * @date		27/03/2024    
-	* @ver 1.0                                                       *
-  ******************************************************************************
-*/
 #include "uart.h"
 
-char arr[MAX];
-char received_data[MAX];
-int count=0,vtri_stt=0;
-char temp_char;
-void UART_Config (void){
-	USART_InitTypeDef uart;
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
-	uart.USART_BaudRate = 9600;
-	uart.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-	uart.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
-	uart.USART_Parity = USART_Parity_No ;
-	uart.USART_StopBits = USART_StopBits_1 ;
-	uart.USART_WordLength = USART_WordLength_8b ;
-	USART_Init ( USART1, &uart);
-	USART_Cmd (USART1, ENABLE);
-	GPIO_Config_TX_RX();
+// --- GPIO -----------------------------------------------
+void GPIO_Config_TX_RX(void) {
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+    GPIO_InitTypeDef g;
+
+    // USART1 TX=PA9, RX=PA10
+    g.GPIO_Pin = GPIO_Pin_9; g.GPIO_Mode = GPIO_Mode_AF_PP; g.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOA, &g);
+    g.GPIO_Pin = GPIO_Pin_10; g.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+    GPIO_Init(GPIOA, &g);
+
+    // USART2 TX=PA2, RX=PA3
+    g.GPIO_Pin = GPIO_Pin_2; g.GPIO_Mode = GPIO_Mode_AF_PP;
+    GPIO_Init(GPIOA, &g);
+    g.GPIO_Pin = GPIO_Pin_3; g.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+    GPIO_Init(GPIOA, &g);
 }
 
-void GPIO_Config_TX_RX(){
-	GPIO_InitTypeDef gpio;
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-	gpio.GPIO_Pin = GPIO_Pin_9;
-	gpio.GPIO_Mode = GPIO_Mode_AF_PP;
-	gpio.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOA, &gpio);
-	
-	gpio.GPIO_Pin = GPIO_Pin_10;
-	gpio.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	GPIO_Init(GPIOA, &gpio);
+// --- USART1 (PC) ----------------------------------------
+void USART1_Config(void) {
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
+    USART_InitTypeDef u;
+    u.USART_BaudRate            = 115200;
+    u.USART_WordLength          = USART_WordLength_8b;
+    u.USART_StopBits            = USART_StopBits_1;
+    u.USART_Parity              = USART_Parity_No;
+    u.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    u.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
+    USART_Init(USART1, &u);
+
+    // Ng?t nh?n t? PC
+    USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+    NVIC_InitTypeDef n;
+    n.NVIC_IRQChannel                   = USART1_IRQn;
+    n.NVIC_IRQChannelPreemptionPriority = 1;
+    n.NVIC_IRQChannelSubPriority        = 0;
+    n.NVIC_IRQChannelCmd                = ENABLE;
+    NVIC_Init(&n);
+
+    USART_Cmd(USART1, ENABLE);
 }
 
-void 	UART_Send_Str(char *str){
-	while(*str != NULL){
-		UART_Send_Char(*str++);		
-	}
-}
-void UART_Send_Char(char _chr){
-	USART_SendData(USART1,_chr);
-	while(USART_GetFlagStatus(USART1, USART_FLAG_TXE)==RESET);
-}
-void UART_Receive_Data(){
-	char temp;
-	temp= USART_ReceiveData(USART1);
-	if (temp == 'B') GPIO_ResetBits(GPIOC, GPIO_Pin_13);
-	else if(temp== 'T') GPIO_SetBits(GPIOC, GPIO_Pin_13);
-}
-void UART_Printf_Number(long number) {
-  char str[18];  // Luu so nguyen am
-  int num_digits = 0,i,j;
-  int is_negative = 0;
-	long temp = number;
-  if (number < 0) {
-    is_negative = 1;
-    number = -number;  // Chuyen so am thanh duong de xu ly
-  }
-  
-  while (temp > 0) {
-    str[num_digits] = '0' + (temp % 10);
-    temp = temp / 10;
-    num_digits++;
-  }
+// --- USART2 (ESP32) -------------------------------------
+void USART2_Config(void) {
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+    USART_InitTypeDef u;
+    u.USART_BaudRate            = 115200;
+    u.USART_WordLength          = USART_WordLength_8b;
+    u.USART_StopBits            = USART_StopBits_1;
+    u.USART_Parity              = USART_Parity_No;
+    u.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+    u.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
+    USART_Init(USART2, &u);
 
-  if (number == 0) {
-    str[num_digits++] = '0';
-  }
-	j = num_digits - 1;
-  for (i = 0; i < j; i++) {
-    char temp_char = str[i];
-    str[i] = str[j];
-    str[j] = temp_char;
-		j--;
-  }
+    USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
+    NVIC_InitTypeDef n;
+    n.NVIC_IRQChannel                   = USART2_IRQn;
+    n.NVIC_IRQChannelPreemptionPriority = 0;
+    n.NVIC_IRQChannelSubPriority        = 0;
+    n.NVIC_IRQChannelCmd                = ENABLE;
+    NVIC_Init(&n);
 
-  if (is_negative) {
-    for (i = num_digits; i >= 0; i--) {
-      str[i + 1] = str[i];
+    USART_Cmd(USART2, ENABLE);
+}
+
+// --- G?i PC ---------------------------------------------
+void PC_Print(const char* str) {
+    while (*str) {
+        while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+        USART_SendData(USART1, (uint8_t)*str++);
     }
-    str[0] = '-';
-    num_digits++;
-  }
-
-  str[num_digits] = '\0';  // Ket thuc chuoi bang NULL
-
-	UART_Send_Str(str);
-	UART_Send_Str("\n");
+}
+void PC_Println(const char* str) {
+    PC_Print(str);
+    PC_Print("\r\n");
 }
 
+// --- Nh?n t? PC (nh?p tay, k?t thúc b?ng Enter) ---------
+static volatile char    pc_rx_buf[MAX_BUFFER];
+static volatile uint8_t pc_rx_idx  = 0;
+static volatile uint8_t pc_line_ready = 0;
 
-void UART_Printf_Float(double number, int decimalPlaces) {
-  char str[10],temp_char; 
-  int num_digits = 0,is_negative = 0,int_part,digit,i=0,j=0;
-	int temp;
-  double decimal_part;
-  if (number < 0) {
-    is_negative = 1;
-    number = -number;
-  }
+void USART1_IRQHandler(void) {
+    if (USART_GetITStatus(USART1, USART_IT_RXNE)) {
+        char c = (char)USART_ReceiveData(USART1);
+        USART_SendData(USART1, c); // Echo l?i
+        while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
 
-  // Phan nguyên
-  decimal_part = number - int_part;
-	int_part = (int)number;
-  // In phan nguyên
-  temp = int_part;
-  while (temp > 0) {
-    str[num_digits] = '0' + (temp % 10);
-    temp = temp / 10;
-    num_digits++;
-  }
-
-  if (int_part == 0) {
-    str[num_digits++] = '0';
-  }
-
-  // Dao nguoc chuoi so nguyên
-  for (i = 0; i < j;i++) {
-		j = num_digits - 1;
-		j--;
-    temp_char = str[i];
-    str[i] = str[j];
-    str[j] = temp_char;
-  }
-
-  // In dau thap phân
-  str[num_digits++] = '.';
-
-  // In phan thap phân
-  for (i = 0; i < decimalPlaces; i++) {
-    decimal_part *= 10;
-    digit = (int)decimal_part;
-    str[num_digits++] = '0' + digit;
-    decimal_part -= digit;
-  }
-
-  str[num_digits] = '\0';  // Ket thúc chuoi bang NULL
-
-  // Dat lai dau am neu can
-  if (is_negative) {
-    for (i = num_digits; i >= 0; i--) {
-      str[i + 1] = str[i];
+        if (c == '\r' || c == '\n') {
+            if (pc_rx_idx > 0) {
+                pc_rx_buf[pc_rx_idx] = '\0';
+                pc_rx_idx = 0;
+                pc_line_ready = 1;
+            }
+        } else if (pc_rx_idx < MAX_BUFFER - 1) {
+            pc_rx_buf[pc_rx_idx++] = c;
+        }
     }
-    str[0] = '-';
-    num_digits++;
-  }
-  UART_Send_Str(str);
-	UART_Send_Str("\n");
 }
 
-void UART_IRQHandler(void){
-	char received_char;
-	if ( USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
-	{
-		received_char= (char) USART_ReceiveData(USART1);
-		if (received_char== '\n')
-		{
-			received_data[count-1]= '\0';
-			count =0;
-			vtri_stt=1;
-		}
-		else if (received_char== '\b')
-		{
-			if (count >0)
-			{
-				count--;
-				received_data[count]= '\0';
-			}
-		}
-		else 
-		{
-			received_data[count]=received_char;
-			count++;
-		}
-	}
-	UART_Send_Str(received_data);
-	UART_Send_Str("\n");
+// Tr? v? 1 n?u có dòng m?i, copy vào buf
+uint8_t PC_ReadLine(char* buf, uint8_t maxlen) {
+    if (!pc_line_ready) return 0;
+    strncpy(buf, (const char*)pc_rx_buf, maxlen);
+    pc_line_ready = 0;
+    return 1;
 }
-void UARTPrintf_Int_Number(int number) {
-  char str[10];  
-  int num_digits = 0,i,j;
-  int is_negative = 0;
-	long temp = number;
-  if (number < 0) {
-    is_negative = 1;
-    number = -number; 
-  }
-  
-  while (temp > 0) {
-    str[num_digits] = '0' + (temp % 10);
-    temp = temp / 10;
-    num_digits++;
-  }
 
-  if (number == 0) {
-    str[num_digits++] = '0';
-  }
-	j = num_digits - 1;
-  for (i = 0; i < j; i++) {
-    char temp_char = str[i];
-    str[i] = str[j];
-    str[j] = temp_char;
-		j--;
-  }
+// --- Giao th?c b?n tin ----------------------------------
+uint8_t MSG_Checksum(Message_t* msg) {
+    uint8_t cs = msg->cmd ^ msg->len;
+    for (int i = 0; i < msg->len; i++) cs ^= msg->data[i];
+    return cs;
+}
 
-  if (is_negative) {
-    for (i = num_digits; i >= 0; i--) {
-      str[i + 1] = str[i];
+void MSG_Build(Message_t* msg, uint8_t cmd, uint8_t* data, uint8_t len) {
+    msg->start    = START_BYTE;
+    msg->cmd      = cmd;
+    msg->len      = len;
+    memcpy(msg->data, data, len);
+    msg->checksum = MSG_Checksum(msg);
+    msg->end      = END_BYTE;
+}
+
+void MSG_Send_ESP32(Message_t* msg) {
+    #define SEND2(b) do { while(USART_GetFlagStatus(USART2,USART_FLAG_TXE)==RESET); USART_SendData(USART2,(b)); } while(0)
+    SEND2(msg->start);
+    SEND2(msg->cmd);
+    SEND2(msg->len);
+    for (int i = 0; i < msg->len; i++) SEND2(msg->data[i]);
+    SEND2(msg->checksum);
+    SEND2(msg->end);
+}
+
+// --- Nh?n t? ESP32 (interrupt) --------------------------
+static uint8_t          esp_rx_buf[MAX_BUFFER];
+static uint8_t          esp_rx_idx = 0;
+static volatile uint8_t esp_msg_ready = 0;
+static Message_t        esp_rx_msg;
+
+void USART2_IRQHandler(void) {
+    if (USART_GetITStatus(USART2, USART_IT_RXNE)) {
+        uint8_t byte = (uint8_t)USART_ReceiveData(USART2);
+
+        if (esp_rx_idx == 0 && byte != START_BYTE) return;
+        esp_rx_buf[esp_rx_idx++] = byte;
+
+        if (esp_rx_idx >= 3) {
+            uint8_t total = 3 + esp_rx_buf[2] + 2; // header + data + cs + end
+            if (esp_rx_idx == total) {
+                esp_rx_msg.start    = esp_rx_buf[0];
+                esp_rx_msg.cmd      = esp_rx_buf[1];
+                esp_rx_msg.len      = esp_rx_buf[2];
+                memcpy(esp_rx_msg.data, &esp_rx_buf[3], esp_rx_msg.len);
+                esp_rx_msg.checksum = esp_rx_buf[3 + esp_rx_msg.len];
+                esp_rx_msg.end      = esp_rx_buf[3 + esp_rx_msg.len + 1];
+                esp_rx_idx = 0;
+
+                if (esp_rx_msg.end == END_BYTE &&
+                    esp_rx_msg.checksum == MSG_Checksum(&esp_rx_msg)) {
+                    esp_msg_ready = 1;
+                }
+            }
+        }
+        if (esp_rx_idx >= MAX_BUFFER) esp_rx_idx = 0;
     }
-    str[0] = '-';
-    num_digits++;
-  }
-
-  str[num_digits] = '\0'; 
-
-	UART_Send_Str(str);
-	UART_Send_Str("\n");
 }
-/********************************* END OF FILE ********************************/
-/******************************************************************************/
+
+uint8_t MSG_Receive_ESP32(Message_t* out_msg) {
+    if (!esp_msg_ready) return 0;
+    *out_msg = esp_rx_msg;
+    esp_msg_ready = 0;
+    return 1;
+}
